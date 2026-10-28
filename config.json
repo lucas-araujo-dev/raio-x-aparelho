@@ -1,0 +1,23 @@
+{
+  "siteName": "Raio-X do Aparelho",
+  "siteUrl": "https://lucas-araujo-dev.github.io/raio-x-aparelho",
+  "description": "Descubra a especificação real do seu projetor, TV box, central multimídia ou celular — direto no navegador, sem instalar nada.",
+
+  "amazonTag": "",
+  "adsenseClient": "",
+  "goatcounterCode": "",
+
+  "pix": {
+    "key": "",
+    "name": "",
+    "city": ""
+  },
+
+  "links": {
+    "_comment": "Links de afiliado fixos (Shopee/Mercado Livre) por produto. Chave = id usado nas páginas, valor = URL curta gerada no painel de afiliados.",
+    "projetor-1080p-nativo": "",
+    "tvbox-mali-g52": "",
+    "central-uis7862": "",
+    "adaptador-carplay-aa-sem-fio": ""
+  }
+}

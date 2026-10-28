@@ -1,0 +1,77 @@
+<!--meta {"title": "Raio-X do Aparelho — descubra a especificação real do seu projetor, TV box ou central", "description": "Teste grátis no navegador: veja o Android, a RAM, o chip e a resolução reais do seu projetor, TV box, central multimídia ou celular e descubra se o anúncio mentiu."} -->
+<h1>Seu aparelho é mesmo o que o anúncio prometeu?</h1>
+<p class="lead">Projetores "4K", TV boxes "Android 14" e centrais multimídia "Android 13" de baixo custo muitas vezes
+mentem a própria especificação. Abra esta página <strong>no navegador do próprio aparelho</strong> e veja o que ele realmente é.</p>
+
+<div class="card">
+  <p><strong>1. O que o anúncio prometia?</strong> <span class="muted">(opcional, mas deixa o veredito mais preciso)</span></p>
+  <div class="claims">
+    <label>Versão do Android
+      <select id="c-android">
+        <option value="">não sei</option>
+        <option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option>
+      </select>
+    </label>
+    <label>Memória RAM
+      <select id="c-ram">
+        <option value="">não sei</option>
+        <option value="1">1 GB</option><option value="2">2 GB</option><option value="4">4 GB</option><option value="6">6 GB</option><option value="8">8 GB</option>
+      </select>
+    </label>
+    <label>Resolução
+      <select id="c-res">
+        <option value="">não sei</option>
+        <option value="720">HD (720p)</option>
+        <option value="1080">Full HD (1080p)</option>
+        <option value="4k">4K</option>
+      </select>
+    </label>
+    <label>Chip / processador
+      <input id="c-chip" type="text" placeholder="ex.: RK3566, H713, S905X3">
+    </label>
+  </div>
+  <p><strong>2. Rode o teste</strong> <span class="muted">(leva 1 segundo; nada é enviado para a internet)</span></p>
+  <button id="run" class="btn big" type="button">Fazer o Raio-X</button>
+</div>
+
+<section id="result" class="hidden" aria-live="polite">
+  <h2>Veredito</h2>
+  <ul id="verdicts" class="verdicts"></ul>
+
+  <h2>O que o aparelho revelou</h2>
+  <div class="table-wrap"><table class="specs"><tbody id="specs"></tbody></table></div>
+
+  <h2>Compartilhe o resultado</h2>
+  <p class="muted">Ajude outras pessoas que estão pensando em comprar o mesmo modelo, em grupos, avaliações da loja ou fóruns.</p>
+  <textarea id="share-text" rows="7" readonly style="width:100%;font:inherit;font-size:.9em;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--text)"></textarea>
+  <p>
+    <button id="share-copy" class="btn" type="button">Copiar texto</button>
+    <a id="share-wa" class="btn alt" href="https://wa.me/" target="_blank" rel="noopener">Enviar no WhatsApp</a>
+  </p>
+  <p>Comprou e se arrependeu? Veja <a href="guias/">os guias</a> para tirar o máximo do aparelho, ou
+  <a href="chips/">compare os chips</a> antes da próxima compra.</p>
+</section>
+
+<h2>Como o teste funciona</h2>
+<p>O fabricante consegue trocar o nome e o número de versão que o aparelho mostra, mas não consegue esconder o hardware de verdade.
+O Raio-X cruza informações que são difíceis de falsificar:</p>
+<ul>
+  <li><strong>Placa de vídeo (GPU)</strong>: cada família de chip usa uma GPU específica. Um aparelho que diz ser "RK3566" mas tem GPU Mali-G31 não é um RK3566.</li>
+  <li><strong>Motor do navegador</strong>: um Android 12 ou 13 verdadeiro sai de fábrica com um motor Chrome recente. Firmware maquiada costuma manter o motor de 2018.</li>
+  <li><strong>Memória e resolução</strong>: o navegador mede a RAM (arredondada) e a resolução em que o sistema realmente desenha a imagem.</li>
+  <li><strong>32 ou 64 bits</strong>: muitos aparelhos baratos rodam Android de 32 bits, que limita a memória por app.</li>
+</ul>
+<p class="muted">Dica: use o navegador que veio no aparelho. O Chrome instalado pela Play Store é sempre recente e esconde uma das pistas.</p>
+
+<h2>Casos reais</h2>
+<div class="card">
+  <p><strong>Projetor HY300 Pro</strong>: se apresentava como "Google ADT-3" com chip Rockchip RK3566. Na verdade é um
+  <strong>Allwinner H713</strong> com Android de <strong>32 bits</strong>, <strong>1 GB de RAM</strong> e sistema em 1280×720.
+  <a href="guias/hy300-pro-especificacao-real.html">Ver a análise completa</a></p>
+</div>
+<div class="card">
+  <p><strong>Central multimídia "Android 13"</strong>: a tela de configurações mostrava Android 13 e o sistema dizia ser Android 12.
+  O Android real era o <strong>9</strong>, com navegador de 2018. <a href="guias/central-multimidia-android-13-falsa.html">Ver como descobrir</a></p>
+</div>
+
+<script src="assets/raiox.js"></script>

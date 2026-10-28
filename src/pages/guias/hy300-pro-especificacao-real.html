@@ -1,0 +1,36 @@
+<!--meta {"title": "HY300 Pro: especificação real, chip, RAM e se vale a pena", "description": "Análise de um projetor HY300 Pro por ADB: chip Allwinner H713 (não RK3566), Android 11 de 32 bits, 1 GB de RAM e sistema em 720p. O que isso significa no uso."} -->
+<h1>HY300 Pro: a especificação real</h1>
+<p class="lead">Analisamos um HY300 Pro por dentro, com acesso de depuração (ADB), para separar o que é verdade do que é marketing.</p>
+
+<h2>Resumo</h2>
+<div class="table-wrap"><table>
+<tr><th>Item</th><th>O aparelho diz</th><th>Medido</th></tr>
+<tr><td>Identidade</td><td>Google ADT-3, Rockchip RK3566</td><td><strong>Allwinner H713 (TV303)</strong>, 4 núcleos Cortex-A53</td></tr>
+<tr><td>Arquitetura</td><td>—</td><td><strong>Android de 32 bits</strong> (armeabi-v7a)</td></tr>
+<tr><td>Android</td><td>11</td><td>11 (API 30), atualização de segurança de fev/2022</td></tr>
+<tr><td>RAM</td><td>varia por anúncio</td><td><strong>960 MB</strong> (modo low_ram ligado)</td></tr>
+<tr><td>Resolução do sistema</td><td>"4K"</td><td><strong>1280×720</strong></td></tr>
+<tr><td>Armazenamento</td><td>varia</td><td>~4,2 GB para apps e dados</td></tr>
+</table></div>
+<p>A identidade falsa ("ADT-3", o aparelho de desenvolvimento do Google) é usada para o aparelho passar como certificado e liberar a Play Store.
+Não é exclusividade do HY300: é um truque comum em firmwares de projetores e TV boxes.</p>
+
+<h2>O que isso significa no dia a dia</h2>
+<ul>
+  <li><strong>Memória é o gargalo, não o processador.</strong> Com o aparelho parado, a CPU fica ~90% ociosa. O que pesa é a RAM: o launcher que vinha instalado sozinho ocupava ~130 MB dos 960 MB.</li>
+  <li><strong>Apps em segundo plano recarregam.</strong> Saiu do YouTube para abrir outra coisa? Ao voltar, ele provavelmente reinicia, porque o Android precisou liberar memória.</li>
+  <li><strong>"4K" é só compatibilidade de arquivo.</strong> Ele abre um vídeo 4K, mas exibe em 720p ou menos.</li>
+  <li><strong>Para assistir streaming em casa, funciona.</strong> YouTube e apps de vídeo rodam; não espere fluidez para jogos ou muitos apps abertos.</li>
+</ul>
+
+<h2>Dá para melhorar?</h2>
+<p>Sim, sem root e de forma reversível. No nosso teste, trocar o launcher e desativar apps de fábrica inúteis liberou cerca de 100 MB de RAM.
+Veja o passo a passo em <a href="otimizar-hy300-sem-root.html">Como deixar o HY300 mais leve sem root</a>.</p>
+
+<h2>Confira o seu</h2>
+<p>Cada lote pode vir com uma placa diferente. Abra o <a href="../">Raio-X</a> no navegador do projetor para ver o chip, a RAM e a resolução do seu.</p>
+
+<h2>Vale a pena comprar?</h2>
+<p>Pelo preço, é um projetor de entretenimento casual: quarto, criança, filme ocasional. Se você quer imagem nítida em tela grande, procure um modelo com <strong>resolução nativa 1080p</strong>
+(e não só "suporta 1080p/4K") e com lúmens ANSI informados.</p>
+<p>{{buy projetor-1080p-nativo "projetor 1080p nativo"}}</p>

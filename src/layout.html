@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{title}}</title>
+<meta name="description" content="{{description}}">
+<link rel="canonical" href="{{canonical}}">
+<meta property="og:title" content="{{title}}">
+<meta property="og:description" content="{{description}}">
+<meta property="og:url" content="{{canonical}}">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta name="theme-color" content="#0f766e">
+<link rel="icon" href="{{base}}assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{{base}}assets/style.css">
+{{head}}
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="{{base}}"><img src="{{base}}assets/icon.svg" alt="" width="28" height="28"> {{siteName}}</a>
+  <nav>
+    <a href="{{base}}">Testar aparelho</a>
+    <a href="{{base}}guias/">Guias</a>
+    <a href="{{base}}chips/">Chips</a>
+    {{nav-ofertas}}
+  </nav>
+</header>
+<main>
+{{content}}
+{{support}}
+</main>
+<footer>
+  <p>{{siteName}} — o teste roda inteiro no seu navegador; nenhum dado do aparelho é enviado.</p>
+  <p class="muted">Alguns links são de afiliado: se você comprar por eles, o site pode receber uma comissão, sem custo extra para você.
+  Isso não muda as recomendações, que se baseiam em especificação medida.
+  <a href="{{base}}sobre.html">Sobre e privacidade</a> · © {{year}}</p>
+</footer>
+<script src="{{base}}assets/site.js" defer></script>
+</body>
+</html>

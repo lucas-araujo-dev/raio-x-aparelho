@@ -1,0 +1,10 @@
+{
+  "name": "raio-x-aparelho",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs && node scripts/check-links.mjs",
+    "test": "node --test tests/raiox.test.mjs",
+    "offers": "node scripts/fetch-offers.mjs"
+  }
+}

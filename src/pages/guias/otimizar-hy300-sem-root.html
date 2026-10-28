@@ -1,0 +1,59 @@
+<!--meta {"title": "Como deixar o projetor HY300 mais leve e rápido sem root", "description": "Passo a passo testado com ADB por Wi-Fi: desativar apps de fábrica inúteis, launcher leve, animações e fuso horário certo. Tudo reversível, sem root e com medições de antes e depois."} -->
+<h1>Como deixar o HY300 mais leve sem root</h1>
+<p class="lead">O HY300 tem só ~1 GB de RAM. Cada megabyte livre faz diferença. Este é o procedimento que aplicamos e medimos, e todos os passos têm reversão.</p>
+
+<h2>Resultado medido</h2>
+<div class="table-wrap"><table>
+<tr><th>Item</th><th>Antes</th><th>Depois</th></tr>
+<tr><td>Memória do launcher (tela inicial)</td><td>122–137 MB</td><td><strong>33 MB</strong></td></tr>
+<tr><td>Abertura da tela inicial</td><td>500 ms</td><td>454 ms</td></tr>
+<tr><td>Loja do fabricante rodando em segundo plano</td><td>12 MB, 2 serviços</td><td>desativada</td></tr>
+<tr><td>Animações</td><td>1×</td><td>0,5× (transições na metade do tempo)</td></tr>
+<tr><td>Fuso horário</td><td>Costa Rica (relógio 3 h atrasado)</td><td>São Paulo</td></tr>
+</table></div>
+<p class="muted">O maior ganho é de memória, não de velocidade: ~100 MB a mais livres reduzem a chance de o YouTube recarregar quando você volta para ele.</p>
+
+<h2>1. Preparar o acesso (ADB por Wi-Fi)</h2>
+<ol>
+  <li>No projetor: Configurações → Preferências do dispositivo → Sobre → clique 7 vezes em <em>Build</em> para ativar o modo desenvolvedor.</li>
+  <li>Em Opções do desenvolvedor, ative a <strong>Depuração USB</strong>. No HY300 testado, isso já abriu o ADB pela rede na porta 5555.</li>
+  <li>Veja o IP do projetor em Configurações → Rede.</li>
+  <li>No computador, instale as <a href="https://developer.android.com/tools/releases/platform-tools" rel="noopener">Platform Tools do Android</a> e rode:</li>
+</ol>
+<pre><code>adb connect 192.168.0.X:5555</code></pre>
+<p>Autorize a conexão na tela do projetor.</p>
+
+<h2>2. Desativar apps de fábrica que não servem para nada</h2>
+<p>Desativar não apaga nada e pode ser desfeito. Estes eram os apps desta firmware (confira os seus com <code>adb shell pm list packages</code>):</p>
+<pre><code>adb shell pm disable-user --user 0 com.htc.storeos              # loja do fabricante
+adb shell pm disable-user --user 0 com.htc.hyk_test             # teste de fábrica
+adb shell pm disable-user --user 0 com.softwinner.agingdragonbox # teste de fábrica
+adb shell pm disable-user --user 0 com.softwinner.dragonatt      # teste de fábrica
+adb shell pm disable-user --user 0 com.softwinner.dragonbox      # teste de fábrica
+adb shell pm disable-user --user 0 com.mobisystems.office        # OfficeSuite</code></pre>
+<p><strong>Não desative</strong> <code>com.htc.htcsettings</code> (foco, keystone, Bluetooth), <code>com.htc.closedialog</code> (ventoinha e controle) nem <code>com.softwinner.awlivetv</code> (entrada HDMI).</p>
+<p>Para reverter: <code>adb shell pm enable NOME.DO.PACOTE</code></p>
+
+<h2>3. Animações mais rápidas</h2>
+<pre><code>adb shell settings put global window_animation_scale 0.5
+adb shell settings put global transition_animation_scale 0.5
+adb shell settings put global animator_duration_scale 0.5</code></pre>
+<p>Para reverter, use <code>1.0</code> no lugar de <code>0.5</code>.</p>
+
+<h2>4. Corrigir o fuso horário</h2>
+<p>O fuso automático deste firmware escolhia a Costa Rica. Para fixar o horário de Brasília:</p>
+<pre><code>adb shell settings put global auto_time_zone 0
+adb shell cmd alarm set-timezone America/Sao_Paulo</code></pre>
+
+<h2>5. Trocar a tela inicial por uma leve</h2>
+<p>Launchers bonitos, cheios de banners e recomendações, são os maiores consumidores de memória do aparelho. Prefira um launcher simples, só com a grade de apps.
+Depois de instalar, defina como padrão pela própria tela (botão Home → escolher) ou por ADB:</p>
+<pre><code>adb shell cmd package set-home-activity PACOTE/.Atividade</code></pre>
+
+<h2>6. Reiniciar e conferir</h2>
+<pre><code>adb reboot
+adb shell dumpsys meminfo | grep -E "Total RAM|Free RAM|Used RAM"</code></pre>
+<p>No nosso teste, tudo persistiu após reiniciar (boot em ~46 s).</p>
+
+<h2>Antes de tudo: o seu é mesmo um H713?</h2>
+<p>Existem várias placas vendidas com o mesmo nome. Rode o <a href="../">Raio-X</a> no navegador do projetor: se aparecer GPU Mali-G31 e 32 bits, este guia vale para você.</p>

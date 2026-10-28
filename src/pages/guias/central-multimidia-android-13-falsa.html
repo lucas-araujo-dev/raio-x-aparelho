@@ -1,0 +1,41 @@
+<!--meta {"title": "Central multimídia Android 13 é falsa? Como descobrir a versão real", "description": "Muitas centrais multimídia chinesas mostram Android 12 ou 13, mas rodam Android 9. Veja como descobrir em 1 minuto pelo navegador ou por ADB, e o que fazer se a sua for falsa."} -->
+<h1>Central multimídia "Android 13": como saber se é falsa</h1>
+<p class="lead">É muito comum: a tela "Sobre" mostra Android 13, mas o sistema por baixo é bem mais velho. Analisamos uma central assim por dentro.</p>
+
+<h2>O caso analisado</h2>
+<div class="table-wrap"><table>
+<tr><th>Item</th><th>O que a central mostrava</th><th>Medido</th></tr>
+<tr><td>Android</td><td>13 na tela, 12 nas propriedades do sistema</td><td><strong>Android 9</strong> (API 28)</td></tr>
+<tr><td>Navegador do sistema (WebView)</td><td>—</td><td><strong>Chrome 66, de 2018</strong></td></tr>
+<tr><td>Processador</td><td>—</td><td>Autochips AC8257: 4× Cortex-A53 a 2,0 GHz</td></tr>
+<tr><td>RAM</td><td>4 GB</td><td>~3,75 GB utilizáveis: compatível com 4 GB reais</td></tr>
+<tr><td>Tela</td><td>—</td><td>1280×720</td></tr>
+<tr><td>Atualização de segurança</td><td>—</td><td>outubro de 2021</td></tr>
+</table></div>
+<p>Repare: a RAM era verdadeira. A mentira costuma estar na versão do Android, no número de núcleos e na resolução.</p>
+
+<h2>Teste de 1 minuto (sem cabo, sem computador)</h2>
+<ol>
+  <li>Abra o <strong>navegador que veio na central</strong> (não instale o Chrome antes).</li>
+  <li>Acesse o <a href="../">Raio-X do Aparelho</a> e marque "Android 13" no campo do anúncio.</li>
+  <li>Toque em <em>Fazer o Raio-X</em>. Se aparecer <strong>"Versão do Android provavelmente maquiada"</strong>, o motor do navegador é antigo demais para a versão anunciada.</li>
+</ol>
+
+<h2>Teste definitivo (com ADB)</h2>
+<p>O número que o fabricante esquece de trocar é o nível de API do SDK:</p>
+<pre><code>adb shell getprop ro.build.version.sdk</code></pre>
+<p>28 = Android 9 · 29 = Android 10 · 30 = Android 11 · 31/32 = Android 12 · 33 = Android 13 · 34 = Android 14.
+Em alguns firmwares até esse valor é alterado. Nesse caso, olhe a versão do app de Configurações:</p>
+<pre><code>adb shell dumpsys package com.android.settings | grep -E "versionName|minSdk"</code></pre>
+
+<h2>A minha é falsa. E agora?</h2>
+<ul>
+  <li><strong>Comprou há menos de 7 dias pela internet?</strong> O Código de Defesa do Consumidor (art. 49) garante o direito de arrependimento. Propaganda enganosa também é motivo de reclamação na loja e no Reclame Aqui.</li>
+  <li><strong>Vai ficar com ela?</strong> Android 9 funciona bem para Android Auto, CarPlay, música e navegação. O que costuma atrapalhar são apps de fábrica pesados (assistentes de voz, launchers cheios de animação). Na central analisada, desativar um assistente de fábrica liberou ~100 MB e quase meio núcleo de CPU.</li>
+  <li><strong>Android Auto/CarPlay sem fio caindo?</strong> Veja <a href="android-auto-sem-fio-caindo-central.html">este guia</a>: a causa mais comum não é o processador.</li>
+</ul>
+
+<h2>Na próxima compra</h2>
+<p>Desconfie de "Android 13/14" em centrais muito baratas. Peça ao vendedor o <strong>nome do chip</strong> (ex.: UIS7862, AC8257) e compare na <a href="../chips/">tabela de chips</a>.
+Centrais com Unisoc UIS7862 (8 núcleos, GPU Mali-G52) costumam ter o melhor custo-benefício.</p>
+<p>{{buy central-uis7862 "central multimidia UIS7862"}}</p>

@@ -1,0 +1,39 @@
+<!--meta {"title": "Android Auto / CarPlay sem fio caindo ou picotando na central chinesa: solução", "description": "Quedas e áudio picotando no Android Auto e CarPlay sem fio em centrais multimídia Android. Teste real mostrou: trocar o ponto de acesso de 2,4 GHz para 5 GHz zerou as quedas."} -->
+<h1>Android Auto / CarPlay sem fio caindo na central chinesa</h1>
+<p class="lead">Música picotando, Waze travando, conexão que cai e volta: investigamos uma central com esse problema com logs do sistema. O culpado não era o processador.</p>
+
+<h2>Como funciona o "sem fio"</h2>
+<p>A central cria uma rede Wi-Fi própria (ponto de acesso) e o celular se conecta a ela. Áudio, mapa e toque passam por essa rede.
+O Bluetooth só é usado para iniciar a conexão e para as chamadas. O problema: muitas centrais criam essa rede em <strong>2,4 GHz</strong>,
+a mesma faixa do Bluetooth. Os dois brigam pelo mesmo rádio.</p>
+
+<h2>O teste</h2>
+<div class="table-wrap"><table>
+<tr><th></th><th>2,4 GHz (padrão de fábrica)</th><th>5 GHz</th></tr>
+<tr><td>Quedas da sessão</td><td>2 em ~4 min</td><td><strong>0</strong></td></tr>
+<tr><td>Falhas de áudio registradas (underruns)</td><td>4</td><td><strong>0</strong></td></tr>
+<tr><td>Carga de CPU de fundo</td><td>alta</td><td>ainda maior</td></tr>
+</table></div>
+<p>Com o processador <em>mais</em> ocupado, o problema sumiu em 5 GHz. Isso aponta para a interferência de rádio, não para falta de desempenho.
+A configuração persistiu depois de desligar e ligar o carro.</p>
+<p class="muted">Ressalva honesta: foi um teste curto, com o carro parado e só com Android Auto. Mesmo assim, é a primeira coisa a tentar, porque é grátis e reversível.</p>
+
+<h2>Como mudar para 5 GHz</h2>
+<ol>
+  <li>Procure nas configurações da central algo como <em>Configurações de projeção</em>, <em>Android Auto / CarPlay</em>, <em>Hotspot</em> ou <em>Ponto de acesso</em>.</li>
+  <li>Troque a banda para <strong>5 GHz</strong> (às vezes aparece como "5G", que aqui não tem nada a ver com rede de celular).</li>
+  <li>No celular, esqueça a rede antiga da central e pareie de novo.</li>
+</ol>
+<p>Se a sua central não tem essa opção, as alternativas são: manter o Wi-Fi do celular sem outra rede conectada, deixar o celular perto da central e
+desativar apps de fábrica que rodam o tempo todo (assistentes de voz são os campeões).</p>
+
+<h2>Outras causas que valem conferir</h2>
+<ul>
+  <li><strong>Central sem desligar de verdade:</strong> muitas entram em "standby" e ficam dias sem reiniciar. Reiniciar de vez em quando ajuda.</li>
+  <li><strong>Bluetooth desligado por engano</strong> na barra de status: sem ele, a conexão sem fio nem começa.</li>
+  <li><strong>Firmware do Android Auto antigo:</strong> o receptor do Android Auto vem dentro do firmware e não atualiza pela Play Store.</li>
+</ul>
+
+<h2>Se nada resolver</h2>
+<p>Um adaptador de CarPlay/Android Auto sem fio ligado na USB transforma a conexão em cabo para a central e costuma ser mais estável que o sem fio nativo de centrais baratas.</p>
+<p>{{buy adaptador-carplay-aa-sem-fio "adaptador carplay android auto sem fio"}}</p>

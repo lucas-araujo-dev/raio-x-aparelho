@@ -1,0 +1,75 @@
+name: Publicar site
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 9 * * 1' # toda segunda, ~06h de Brasília: atualiza ofertas e republica
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Atualizar ofertas (Shopee Afiliados)
+        env:
+          SHOPEE_APP_ID: ${{ secrets.SHOPEE_APP_ID }}
+          SHOPEE_APP_SECRET: ${{ secrets.SHOPEE_APP_SECRET }}
+        run: node scripts/fetch-offers.mjs
+
+      - name: Gerar site
+        env:
+          AMAZON_TAG: ${{ vars.AMAZON_TAG }}
+          ADSENSE_CLIENT: ${{ vars.ADSENSE_CLIENT }}
+          GOATCOUNTER_CODE: ${{ vars.GOATCOUNTER_CODE }}
+          CUSTOM_DOMAIN: ${{ vars.CUSTOM_DOMAIN }}
+          PIX_KEY: ${{ vars.PIX_KEY }}
+          PIX_NAME: ${{ vars.PIX_NAME }}
+          PIX_CITY: ${{ vars.PIX_CITY }}
+          AFFILIATE_LINKS: ${{ vars.AFFILIATE_LINKS }}
+          GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+        run: |
+          node build.mjs
+          node scripts/check-links.mjs
+          node --test tests/raiox.test.mjs
+
+      # O GitHub desliga agendamentos de repositórios sem atividade por 60 dias.
+      # Gravar a data da última execução mantém o robô semanal vivo sem ninguém mexer.
+      - name: Registrar execução
+        if: github.event_name == 'schedule'
+        run: |
+          mkdir -p data
+          date -u +%Y-%m-%dT%H:%MZ > data/ultima-execucao.txt
+          git config user.name "robo-raio-x"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git commit -m "Atualização semanal automática" || echo "nada mudou"
+          git push || echo "push falhou (segue a publicação)"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
