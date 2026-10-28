@@ -115,6 +115,7 @@ for (const file of walk(path.join(SRC, 'pages'))) {
 }
 
 fs.cpSync(path.join(SRC, 'assets'), path.join(DIST, 'assets'), { recursive: true });
+fs.cpSync(path.join(SRC, 'static'), DIST, { recursive: true }); // chave do IndexNow etc.
 
 fs.writeFileSync(path.join(DIST, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages

@@ -73,3 +73,8 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+      - uses: actions/checkout@v4
+      - name: Avisar buscadores (IndexNow)
+        env:
+          SITE_URL: ${{ vars.CUSTOM_DOMAIN && format('https://{0}', vars.CUSTOM_DOMAIN) || '' }}
+        run: node scripts/indexnow.mjs || echo "IndexNow indisponível (segue)"
