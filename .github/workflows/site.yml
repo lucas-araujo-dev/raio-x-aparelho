@@ -45,7 +45,7 @@ jobs:
         run: |
           node build.mjs
           node scripts/check-links.mjs
-          node --test tests/raiox.test.mjs
+          node --test tests/*.test.mjs
 
       # O GitHub desliga agendamentos de repositórios sem atividade por 60 dias.
       # Gravar a data da última execução mantém o robô semanal vivo sem ninguém mexer.

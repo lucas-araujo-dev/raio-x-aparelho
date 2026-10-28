@@ -2,6 +2,8 @@
 (function () {
   var box = document.getElementById('apoie');
   if (!box) return;
+  var cta = document.querySelector('[data-apoie-cta]');
+  if (cta) cta.classList.remove('hidden');
 
   function field(id, value) {
     var len = String(value.length);
